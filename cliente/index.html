@@ -23,39 +23,20 @@
             right: 0;
             left: 0;
             display: flex;
+            z-index: 20;
 
         }
 
-        div {}
     </style>
 
 </head>
 
 <body>
 
-    <div class="chat-discussion" style="height: 90%;">
+    <div class="chat-discussion" style="height: 100%;">
 
-        <div class="chat-message left">
-            <img class="message-avatar" src="img/a1.jpg" alt="">
-            <div class="message">
-                <span class="message-date"> Mon Jan 26 2015 - 18:39:23 </span>
-                <span class="message-content">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-                    laoreet dolore magna aliquam erat volutpat.
-                </span>
-            </div>
-        </div>
-        <div class="chat-message right">
-            <img class="message-avatar" src="img/a4.jpg" alt="">
-            <div class="message">
-                <a class="message-author" href="#"> Karl Jordan </a>
-                <span class="message-date"> Fri Jan 25 2015 - 11:12:36 </span>
-                <span class="message-content">
-                    Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model
-                    text, and a search for 'lorem ipsum' will uncover.
-                </span>
-            </div>
-        </div>
+        <div class="chat-message left" id="mensajes" style="display: none;"></div>
+        
 
         <form action="">
 
@@ -88,12 +69,32 @@
 
         })
 
+        var number = 0
+
         socket.on('chat', (msg) => {
 
             let item = document.createElement('div')
-            item.className = "chat-message left"
-            item.innerHTML = "<img class=" + "'message-avatar'" + "src=" + "'img/a1.jpg' " + "><div class="+"'message'"+">"+"<span class="+"'message-content'"+">"+msg+"</span></div>"
-            mensajes.appendChild(item)
+
+            if (number % 2 == 0) {
+
+                item.classList.add("chat-message", "left")
+                item.id = "chat-message"
+                item.innerHTML = "<img class=" + "'message-avatar'" + "src=" + "'img/a1.jpg' " + "><div class=" + "'message'" + ">" + "<span class=" + "'message-content'" + ">" + msg + "</span></div>"
+                mensajes.appendChild(item)
+                console.log(number)
+                number = number + 1
+
+            }else {
+
+                item.classList.add("chat-message", "right")
+                item.id = "chat-message"
+                item.innerHTML = "<img class=" + "'message-avatar'" + "src=" + "'img/a4.jpg' " + "><div class=" + "'message'" + ">" + "<span class=" + "'message-content'" + ">" + msg + "</span></div>"
+                mensajes.appendChild(item)
+                console.log(number)
+                number = number + 1
+
+            }
+
             window.scrollTo(0, document.body.scrollHeight)
 
         })
